@@ -14,6 +14,7 @@ export const todos = createTable(
   "todo",
   {
     id: serial("id").primaryKey(),
+    userId: varchar("userId", { length: 256 }).notNull(),
     completed: boolean("completed").notNull(),
     todo: varchar("todo", { length: 256 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })

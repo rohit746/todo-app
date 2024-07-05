@@ -1,19 +1,15 @@
-import Todo from "~/components/todo";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import AddTodo from "~/components/addtodo";
 import { getMyTodos } from "~/server/queries";
+import Todos from "~/components/todos";
+
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const todos = await getMyTodos();
   return (
     <main className={"flex-1 space-y-4 p-6 md:space-y-6 md:p-12"}>
       <SignedIn>
-        <AddTodo />
-        {todos.map((todo) => (
-          <div key={todo.id} className={"space-y-2 md:space-y-4"}>
-            <Todo todo={todo.todo} completed={todo.completed} id={todo.id} />
-          </div>
-        ))}
+        <Todos todos={todos} />
       </SignedIn>
       <SignedOut>
         <h1
