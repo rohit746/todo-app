@@ -5,14 +5,20 @@ import { Button } from "~/components/ui/button";
 import { TrashIcon } from "lucide-react";
 import { cn } from "~/lib/utils";
 import React from "react";
+import { deleteTodo } from "~/server/queries";
 
 export default function Todo({
+  id,
   todo,
   completed,
 }: {
+  id: number;
   todo: string;
   completed: boolean;
 }) {
+  async function handelClick(id: number) {
+    await deleteTodo(id);
+  }
   return (
     <div
       className={cn(
@@ -28,6 +34,7 @@ export default function Todo({
         variant="ghost"
         size="icon"
         className="rounded-full text-red-500 hover:bg-muted/50"
+        onClick={() => handelClick(id)}
       >
         <TrashIcon className="h-4 w-4 md:h-5 md:w-5" />
       </Button>

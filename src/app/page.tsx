@@ -11,7 +11,7 @@ export default async function HomePage() {
         <AddTodo />
         {todos.map((todo) => (
           <div key={todo.id} className={"space-y-2 md:space-y-4"}>
-            <Todo todo={todo.todo} completed={todo.completed} />
+            <Todo todo={todo.todo} completed={todo.completed} id={todo.id} />
           </div>
         ))}
       </SignedIn>
