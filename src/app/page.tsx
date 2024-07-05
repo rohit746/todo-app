@@ -4,12 +4,16 @@ import Todos from "~/components/todos";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
+async function Todo() {
   const todos = await getMyTodos();
+  return <Todos todos={todos} />;
+}
+
+export default function HomePage() {
   return (
     <main className={"flex-1 space-y-4 p-6 md:space-y-6 md:p-12"}>
       <SignedIn>
-        <Todos todos={todos} />
+        <Todo />
       </SignedIn>
       <SignedOut>
         <h1

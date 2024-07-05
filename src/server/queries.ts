@@ -1,6 +1,6 @@
 "use server";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, not } from "drizzle-orm";
 import { db } from "./db";
 import { todos } from "./db/schema";
 import { auth } from "@clerk/nextjs/server";
@@ -38,6 +38,21 @@ export async function deleteTodo(id: number) {
 
   await db
     .delete(todos)
+    .where(and(eq(todos.id, id), eq(todos.userId, user.userId)));
+
+  revalidatePath("/");
+}
+
+export async function toggleTodo(id: number) {
+  const user = auth();
+
+  if (!user.userId) throw new Error("Unauthorized");
+
+  await db
+    .update(todos)
+    .set({
+      completed: not(todos.completed),
+    })
     .where(and(eq(todos.id, id), eq(todos.userId, user.userId)));
 
   revalidatePath("/");
